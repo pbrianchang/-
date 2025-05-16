@@ -6,7 +6,7 @@
   <script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.min.js"></script>
   <script src="main.js"></script>
   <style>
-    html, body { margin:0; padding:0; overflow:hidden; background:#000; }
+    html, body { margin:0; padding:0; overflow:hidden; background:#909090; }
   </style>
 </head>
 <body></body>
