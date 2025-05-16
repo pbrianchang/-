@@ -5,8 +5,8 @@ const LENGTH = [4,10,10];
 
 const config = {
   type: Phaser.AUTO,
-  width: 800,
-  height: 600,
+  width: window.innerWidth,
+  height: window.innerHeight,
   backgroundColor: 0x222222,
   scene: { create: create }
 };
