@@ -1,7 +1,7 @@
 const REEL_COUNT = 3;
 const SPIN_DURATION = 3000;
 const SPIN_DELAY = 1000;
-const LENGTH = [2,10,10];
+const LENGTH = [3,10,10];
 
 const config = {
   type: Phaser.AUTO,
