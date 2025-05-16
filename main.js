@@ -1,13 +1,13 @@
 const REEL_COUNT = 3;
 const SPIN_DURATION = 3000;
 const SPIN_DELAY = 1000;
-const LENGTH = [4,10,10];
+const LENGTH = [2,10,10];
 
 const config = {
   type: Phaser.AUTO,
   width: window.innerWidth,
   height: window.innerHeight,
-  backgroundColor: 0x000000,
+  backgroundColor: 0x222222,
   scene: { create: create }
 };
 
