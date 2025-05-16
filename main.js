@@ -1,5 +1,7 @@
 const REEL_COUNT = 3;
-const SPIN_DURATION = 3000;
+const SPIN_DURATION_0 = 3000;
+const SPIN_DURATION_1 = 8000;
+const SPIN_DURATION_2 = 15000;
 const SPIN_DELAY = 1000;
 const LENGTH = [4,10,10];
 
@@ -58,7 +60,7 @@ function create() {
       step: 0
     });
     
-    updateReelNumbers(this.reels[i], i);
+    updateReelNumbers(this.reels[i], i, 1);
   }
   
   const spinBtn = this.add.text(centerX, centerY + 180, 'SPIN', 
@@ -78,8 +80,8 @@ function create() {
   });
 }
 
-function updateReelNumbers(reel, i) {
-  reel.value += 1;
+function updateReelNumbers(reel, i, t) {
+  reel.value += 1*t;
   const current = reel.value;
   reel.numbers[0].setText((current + 1) % LENGTH[i]);
   reel.numbers[1].setText(current % LENGTH[i]);
@@ -98,20 +100,34 @@ function spinReels(onComplete) {
     if (reel.tween) reel.tween.remove();
     
     const targetValue = Phaser.Math.Between(0, 9);
-    const spinCount = 1 + Phaser.Math.Between(0, 0);
+    const spinCount = 5 + (i > 0) * 9+ Phaser.Math.Between(0, 2);
     
     const totalMovement = spinCount * LENGTH[i] + (targetValue - reel.value) + 1;
     
     reel.tween = this.tweens.add({
       targets: reel.numbers,
       y: `+=${(totalMovement * reel.height)}`,
-      duration: SPIN_DURATION + i * SPIN_DELAY,
+      duration: (i==0) * SPIN_DURATION_0  + (i==1) * SPIN_DURATION_1 + (i==2) * SPIN_DURATION_2 ,
       delay: i * SPIN_DELAY,
-      ease: 'Sine.easeInOut',
+      //ease: 'Sine.easeInOut',
+      ease: (t, i) => -(i==0 || i==1) * (Math.cos(Math.PI * t) - 1) / 2 + 
+      (i==2) * (
+      (t<0.2)*(15*t*t)
+      +(t<0.4)*(t>=0.2)*(-15*(t-0.4)*(t-0.4)+1.2)
+      +(t<0.723)*(t>=0.4)*(-2.75*(t-0.4)*(t-0.4)+1.2)
+      +(t<0.92)*(t>=0.723)*(6*(t-0.92)*(t-0.92)+0.68)
+      +(t>=0.92)*(60*(t-0.92)*(t-0.92))
+      ),
+      easeParams: [ i ],     
       onUpdate: () => {
         while(reel.numbers[1].y - reel.step * reel.height > 0){
           reel.step += 1;
-          updateReelNumbers(reel, i);
+          updateReelNumbers(reel, i, 1);
+        }
+        while(reel.numbers[1].y  < -1*reel.height){
+          reel.numbers[1].y+=reel.height;
+          reel.step -= 1;
+          updateReelNumbers(reel, i, -1);
         }
         reel.numbers[0].y -= reel.step * reel.height / 4
         reel.numbers[1].y -= reel.step * reel.height / 3
@@ -124,15 +140,16 @@ function spinReels(onComplete) {
         reel.numbers[2].y = reel.height;
         reel.numbers[3].y = reel.height * 2;
         reel.value = targetValue;
-        updateReelNumbers(reel, i);
+        updateReelNumbers(reel, i, 1);
         
         reel.isSpinning = false;
         completedReels++;
         
-        if (completedReels === this.reels.length && onComplete) {
+        if (completedReels == this.reels.length && onComplete) {
           onComplete();
         }
       }
     });
   }
 }
+
