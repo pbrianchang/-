@@ -7,7 +7,7 @@ const config = {
   type: Phaser.AUTO,
   width: window.innerWidth,
   height: window.innerHeight,
-  backgroundColor: 0x222222,
+  backgroundColor: 0x000000,
   scene: { create: create }
 };
 
