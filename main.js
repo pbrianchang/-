@@ -58,11 +58,9 @@ function create() {
       step: 0
     });
     
-    // 初始化數字
     updateReelNumbers(this.reels[i], i);
   }
   
-  // 建立SPIN按鈕
   const spinBtn = this.add.text(centerX, centerY + 180, 'SPIN', 
     { 
       fontSize: '48px', 
@@ -80,7 +78,6 @@ function create() {
   });
 }
 
-// 更新滾輪上的數字
 function updateReelNumbers(reel, i) {
   reel.value += 1;
   const current = reel.value;
