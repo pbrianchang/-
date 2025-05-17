@@ -1,8 +1,9 @@
 const REEL_COUNT = 3;
 const SPIN_DURATION_0 = 3000;
-const SPIN_DURATION_1 = 8000;
-const SPIN_DURATION_2 = 15000;
-const SPIN_DELAY = 1000;
+const SPIN_DURATION_1 = 6000;
+const SPIN_DURATION_2 = 10000;
+const SPIN_DELAY_1 = 1000;
+const SPIN_DELAY_2 = 5000;
 const LENGTH = [4,10,10];
 
 const config = {
@@ -108,7 +109,7 @@ function spinReels(onComplete) {
       targets: reel.numbers,
       y: `+=${(totalMovement * reel.height)}`,
       duration: (i==0) * SPIN_DURATION_0  + (i==1) * SPIN_DURATION_1 + (i==2) * SPIN_DURATION_2 ,
-      delay: i * SPIN_DELAY,
+      delay: (i==1) * SPIN_DELAY_1 + (i==2) * SPIN_DELAY_2,
       //ease: 'Sine.easeInOut',
       ease: (t, i) => -(i==0 || i==1) * (Math.cos(Math.PI * t) - 1) / 2 + 
       (i==2) * (
