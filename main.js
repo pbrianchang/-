@@ -4,7 +4,7 @@ const SPIN_DURATION_1 = 6000;
 const SPIN_DURATION_2 = 10000;
 const SPIN_DELAY_1 = 1000;
 const SPIN_DELAY_2 = 5000;
-const LENGTH = [4,10,10];
+const LENGTH = [3,10,10];
 
 const config = {
   type: Phaser.AUTO,
